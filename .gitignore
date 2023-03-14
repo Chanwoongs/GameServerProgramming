@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+
+# Debug
+[Dd]ebug/
+[Vv]16/
