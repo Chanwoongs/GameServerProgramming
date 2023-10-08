@@ -66,7 +66,7 @@ int main()
 						primes.push_back(n);
 					}
 				}
-			}));
+			})); // ERROR
 
 		// 스레드 객체를 일단 갖고 있는다.
 		threads.push_back(thread);
