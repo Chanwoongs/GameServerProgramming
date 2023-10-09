@@ -5,6 +5,7 @@
 #include <thread>
 #include <memory>
 #include <mutex>
+#include <windows.h>
 
 using namespace std;
 
@@ -49,7 +50,7 @@ int main()
 
 	for (int i = 0; i < ThreadCount; i++)
 	{
-		shared_ptr<thread> thread(new thread([&]()
+		shared_ptr<thread> threadInstance(new thread([&]()
 			{
 				// 각 스레드의 메인 함수
 				// 값을 가져올 수 있으면 루프를 돈다.
@@ -60,7 +61,7 @@ int main()
 					{
 						lock_guard<recursive_mutex> num_lock(num_mutex);
 						n = num;
-						n++;
+						num++;
 					}
 
 					// 목표까지 실행 후 탈출
@@ -70,13 +71,14 @@ int main()
 					if (IsPrimeNumber(n))
 					{
 						lock_guard<recursive_mutex> primes_lock(primes_mutex);
+						Sleep(1);
 						primes.push_back(n);
 					}
 				}
 			})); // ERROR
 
 		// 스레드 객체를 일단 갖고 있는다.
-		threads.push_back(thread);
+		threads.push_back(threadInstance);
 	}
 
 	// 모든 스레드가 일을 마칠 때까지 기다린다.
